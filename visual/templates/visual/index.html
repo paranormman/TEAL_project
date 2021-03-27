@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %} {% if something %}
+<h1>Fast Fourier Transform</h1>
+<h2>{ <br>"frequency":{{ frequency }}, "amplitude":[{{ amplitude }}] <br>} </h2>
+<!-- <h2>"amplitude":[{{ amplitude }}]</h2> -->
+{% else %}
+<a href="{% url 'Upload' %}">
+    <h1>Please upload a file</h1>
+</a>
+{% endif %} {% endblock %}
