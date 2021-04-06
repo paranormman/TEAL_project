@@ -1,6 +1,10 @@
 {% extends 'base.html' %} {% block content %} {% if something %}
 <h1>Fast Fourier Transform</h1>
 <h2>{ <br>"frequency":{{ frequency }}, "amplitude":[{{ amplitude }}] <br>} </h2>
+<a>
+    <img src="data:image/png;base64, {{data}}" alt="" height="500" , width="500">
+</a>
+
 <!-- <h2>"amplitude":[{{ amplitude }}]</h2> -->
 {% else %}
 <a href="{% url 'Upload' %}">
