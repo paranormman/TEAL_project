@@ -6,5 +6,6 @@ urlpatterns =[
     path('', views.Home.as_view(), name = "Home"),
     path('index/', views.index, name = "Index"),
     path('upload/', views.upload, name = "Upload"),
+    path('download/', views.download, name = "Download"),
 ]
 

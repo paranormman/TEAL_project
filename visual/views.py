@@ -14,6 +14,7 @@ import urllib, base64
 import matplotlib.pyplot as plt
 from .models import SourceFile
 from .forms import UploadFileForm
+from django.conf.urls import url
 
 # Create your views here.
 
@@ -53,6 +54,30 @@ def index(request):
     else:
         return render (request,'visual/index.html')
 
+def download(request):
+    context = {}
+    if request.method == 'POST':
+        file = open("Acc_time.csv", "a", newline="")
+        csv = pd.read_csv(file)
+        sf = 40960
+        samplingFrequency = sf;
+        samplingInterval = 1 / samplingFrequency;
+        time = csv['time']
+        amplitude = csv['amplitude']
+        fourierTransform = np.fft.fft(amplitude)/len(amplitude)           # Normalize amplitude
+        fourierTransform = fourierTransform[range(int(len(amplitude)/2))] # Exclude sampling frequency
+        tpCount     = len(amplitude)
+        values      = np.arange(int(tpCount/2))
+        timePeriod  = tpCount/samplingFrequency
+        frequencies = values/timePeriod
+        tup1 = (frequencies, abs(fourierTransform))
+        writer = csv.writer(file)
+        writer.writerow()
+        file.close()
+        context['url'] = url(file)
+        return render (request, 'visual/download.html', context)
+
+    
 
 def upload(request):
     if request.method == 'POST':
