@@ -14,6 +14,7 @@ import urllib, base64
 import matplotlib.pyplot as plt
 from .models import SourceFile
 from .forms import UploadFileForm
+from . validators import validate_file
 
 # Create your views here.
 
@@ -26,7 +27,9 @@ def index(request):
     if request.method =="POST":
         file = request.FILES["file"]
         csv = pd.read_csv(file, error_bad_lines=False)
-        sf = 40960
+        val = len(csv['time'])
+        num = csv['time']. iloc[-1]
+        sf = int((val/num)*1000)
         samplingFrequency = sf;
         samplingInterval = 1 / samplingFrequency;
         time = csv['time']
@@ -58,9 +61,10 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
+            file = UploadFileForm()
             form.save()
-            return redirect('index')
-    else:
+            return redirect('Index')
+    elif request.method == 'GET':
         form = UploadFileForm()
     return render (request, 'visual/upload.html', {'form' : form})
 

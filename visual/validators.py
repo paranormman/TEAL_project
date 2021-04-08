@@ -1,21 +1,26 @@
 from django.core.exceptions import ValidationError
 import os
+import pandas as pd
 
 
 def validate_file(value):
+
     ext = os.path.splitext(value.name)[1]
     valid_extentions = ['.csv']
-    if not ext.lower() in valid_extentions:
-        raise ValidationError(u'Unsupported file extention. please upload a .csv file. ')
+    if ext.lower() in valid_extentions:
+        csv = pd.read_csv(value, header=0, nrows=0).columns.tolist()
+        first = csv.index('time')
+        second = csv.index('amplitude')
+        if first != 0:
+            raise ValidationError(u'Missing time value data')
+        elif second != 1:
+            raise ValidationError(u'Missing Amplitude value data')
+        else:
+            return value
     else:
-        return value
+        raise ValidationError(u'Unsupported file extention. please upload a .csv file. ')
 
 
 
 
 
-    # value= str(value)
-    # if value.endswith(".csv") != True: 
-    #     raise ValidationError("Only PDF and Word Documents can be uploaded")
-    # else:
-    #     return value
