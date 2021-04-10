@@ -61,7 +61,8 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            file = UploadFileForm()
+            file_uploaded = form.save(commit=False)
+            # file = UploadFileForm()
             form.save()
             return redirect('Index')
     elif request.method == 'GET':

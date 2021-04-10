@@ -42,15 +42,20 @@ import csv
 import pandas as pd
 # import numpy as np
 
-file = ("E:\Django_proj\mysite\media\media\Acc_time.csv")
-csv = pd.read_csv(file, header=0, nrows=0).columns.tolist()
-first = csv.index(0)
-# time = len(csv['time'])
+file = ("E:\\Django_proj\\restapi\\media\\Acc_time_ext.csv")
+# csv = pd.read_csv(file)
+csv = pd.read_csv(file)
+if csv.isnull().any()['time']:
+    print(u'Missing time value data')
+elif csv.isnull().any()['amplitude']:
+    print (u'Missing Amplitude value data')
+
+# time = len(csv[0])
 # num = csv['time']. iloc[1]
 # sf = int((time/num)*1000)
 # print(sf)
 # val = len(file.columns)
-print(first)
+# print(time)
 
 
     
