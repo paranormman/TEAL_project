@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import FileUploadParser, FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework import status
 import pandas as pd
@@ -20,28 +20,30 @@ class FileView(APIView):
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class calculations(APIView):
-#     def get(self, request):
-#         fft = Files(data = request.query_params)
-#         fft.is_valid(raise_exception = 'True')
 
-#         data = fft.validated_data
-#         model_input = data["file"]
+class calculations(APIView):
+    parser_class = (FileUploadParser,)
 
-#         csv = pd.read_csv(model_input)
-#         sf = 40960
-#         samplingFrequency = sf;
-#         samplingInterval = 1 / samplingFrequency;
-#         time = csv['time']
-#         amplitude = csv['amplitude']
-#         fourierTransform = np.fft.fft(amplitude)/len(amplitude)           # Normalize amplitude
-#         fourierTransform = fourierTransform[range(int(len(amplitude)/2))] # Exclude sampling frequency
-#         tpCount     = len(amplitude)
-#         values      = np.arange(int(tpCount/2))
-#         timePeriod  = tpCount/samplingFrequency
-#         frequencies = values/timePeriod
+    def post(self, request, format = 'csv'):
+        up_file = request.Files['file']
+        destinaton = open('E:/Django_proj/restapi/media/' + up_file.name, 'wb+')
+        for chunk in up_file.chunks():
+            destinaton.write(chunk)
+        destinaton.close()
+        csv = pd.read_csv(up_file)
+        sf = 40960
+        samplingFrequency = sf;
+        samplingInterval = 1 / samplingFrequency;
+        time = csv['time']
+        amplitude = csv['amplitude']
+        fourierTransform = np.fft.fft(amplitude)/len(amplitude)           # Normalize amplitude
+        fourierTransform = fourierTransform[range(int(len(amplitude)/2))] # Exclude sampling frequency
+        tpCount     = len(amplitude)
+        values      = np.arange(int(tpCount/2))
+        timePeriod  = tpCount/samplingFrequency
+        frequencies = values/timePeriod
 
-#         return Response({
-#             "Frequency": frequencies,
-#             "Amplitude": abs(fourierTransform)
-#         })
+        return Response({
+            "Frequency": frequencies,
+            "Amplitude": abs(fourierTransform)
+        }, status = status.HTTP_201_CREATED)
