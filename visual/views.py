@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse, JsonResponse, request
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, request
 from django.views.generic import TemplateView
 from django.core.files.storage import FileSystemStorage
 from django.views.decorators.csrf import csrf_exempt
@@ -15,6 +15,9 @@ import matplotlib.pyplot as plt
 from .models import SourceFile
 from .forms import UploadFileForm
 from . validators import validate_file
+from django.contrib import messages
+from rest_framework.reverse import reverse
+import logging
 
 # Create your views here.
 
@@ -57,7 +60,7 @@ def index(request):
         return render (request,'visual/index.html')
 
 
-def upload(request):
+def upload(request):     
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():

@@ -12,6 +12,12 @@ class UploadFileForm(forms.ModelForm):
         model = SourceFile
         fields = ('file',)
 
+# class UploadSample(forms.ModelForm):
+
+#     class Meta:
+#         model = Sample
+#         fields = ('sampling frequency',)
+
 
     def clean_csv_file(self):
         upload = self.cleaned_data['file']

@@ -5,6 +5,9 @@ from . validators import validate_file
 class SourceFile(models.Model):
     file = models.FileField(upload_to="media/", validators=[validate_file])
     title = models.CharField(max_length=255)
+
+# class Sample(models.Model):
+#     samplingFrequency = models.IntegerField(max_length=)
     
 
     def __str__(self):
