@@ -5,16 +5,18 @@ from rest_framework import status
 import pandas as pd
 import numpy as np
 from rest_framework import serializers
-from . models import Files
+from . models import Files, SamplingFrequency
 
-from .serializers import FilesSerializer
+from .serializers import FilesSerializer, SampleSerializer
 
 class FileView(APIView):
     parser_classes = (MultiPartParser, FormParser)
     def post(self, request, *args, **kwargs):
 
         file_serializer = FilesSerializer(data=request.data)
-        if file_serializer.is_valid():
+        if file_serializer.is_valid():  
+            # try:                                                                      #getting sampling frequency value if not valid
+            #     sampling_serializer = SampleSerializer(value = request.value)
             file_serializer.save()
             return Response(file_serializer.data, status = status.HTTP_201_CREATED)
         else:
@@ -26,12 +28,14 @@ class calculations(APIView):
 
     def post(self, request, format = 'csv'):
         up_file = request.Files['file']
-        destinaton = open('E:/Django_proj/restapi/media/' + up_file.name, 'wb+')
-        for chunk in up_file.chunks():
-            destinaton.write(chunk)
-        destinaton.close()
-        csv = pd.read_csv(up_file)
-        sf = 40960
+        # destinaton = open('E:/Django_proj/restapi/media/' + up_file.name, 'wb+')
+        # for chunk in up_file.chunks():
+        #     destinaton.write(chunk)
+        # destinaton.close()
+        csv = pd.read_csv(up_file, error_bad_lines=False)
+        val = len(csv['time'])
+        num = csv['time']. iloc[-1]
+        sf = int((val/num)*1000)
         samplingFrequency = sf;
         samplingInterval = 1 / samplingFrequency;
         time = csv['time']

@@ -24,7 +24,7 @@ def validate_file(value):
             raise ValidationError("Unable to upload CVS file. "+repr(e))
         
     else:
-        raise ValidationError("Only CSV can be uploaded")
+        raise ValidationError("Unappropriate File type Only .CSV can be uploaded")
 
     # df=pd.read_csv(value)
     # if not ("time" in df.columns.tolist() and "amplitude" in df.columns.tolist()):
