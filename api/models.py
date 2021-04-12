@@ -9,6 +9,6 @@ class Files(models.Model):
 
 # creating sampling frequency IntegerField
 
-# class SamplingFrequency(models.Model):
-#     samplingFrequency = models.IntegerField(max_length= 50)
+class SamplingFrequency(models.Model):
+    samplingFrequency = models.IntegerField(max_length= 50)
 
