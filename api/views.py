@@ -5,9 +5,9 @@ from rest_framework import status
 import pandas as pd
 import numpy as np
 from rest_framework import serializers
-from . models import Files, SamplingFrequency
+from . models import Files
 
-from .serializers import FilesSerializer, SampleSerializer
+from .serializers import FilesSerializer
 
 class FileView(APIView):
     parser_classes = (MultiPartParser, FormParser)
