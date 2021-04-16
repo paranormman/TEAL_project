@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from . models import Files, SamplingFrequency
+from . models import Files
 
 class FilesSerializer(serializers.ModelSerializer):
     class Meta():
@@ -9,8 +9,8 @@ class FilesSerializer(serializers.ModelSerializer):
 # Declaring sampling frequency field to get samplig frequency value 
 # if time field is not present in the uploaded file
 
-class SampleSerializer(serializers.ModelSerializer):              
-    class Meta():
-        model = SamplingFrequency
-        fields = ('sampling frequency',)
+# class SampleSerializer(serializers.ModelSerializer):              
+#     class Meta():
+#         model = SamplingFrequency
+#         fields = ('sampling frequency',)
 
