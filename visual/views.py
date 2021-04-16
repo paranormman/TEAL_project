@@ -19,6 +19,7 @@ from . validators import validate_file
 from django.contrib import messages
 from rest_framework.reverse import reverse
 import logging
+import os
 
 # Create your views here.
 
@@ -29,10 +30,13 @@ class Home(TemplateView):
 
 def index(request):
     if request.method =="POST":
-        file = request.FILES.get('files', None)
-        csv = pd.read_csv(file)
-        if file.endswith(".csv") == True:
+        file = request.FILES.get('file', None)
+        # name = os.path.splitext(file)
+        ext = os.path.splitext(file.name)[1]
+        valid_extentions = ['.csv']
+        if ext.lower() in valid_extentions:
             try:
+                csv = pd.read_csv(file)
                 n = len(csv.columns.tolist())
                 if n == 0:
                     raise ValidationError(u'No Column to parse ')
