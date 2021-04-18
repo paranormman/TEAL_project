@@ -80,26 +80,25 @@ def index(request):
 
 
 def upload(request):     
-    # if request.method == 'POST':
-    #     form = UploadFileForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         file_uploaded = form.save(commit=False)
-    #         # file = UploadFileForm()
-    #         form.save()
-    #         return redirect('Index')
-    # elif request.method == 'GET':
-    #     form = UploadFileForm()
-    # return render (request, 'visual/upload.html', {'form' : form})
-
-
-
-
-    context = {}
     if request.method == 'POST':
-        uploaded_file = request.FILES['file']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        url = fs.url(name)
-        context['url'] = fs.url(name)
-    return render (request, 'visual/upload.html', context)
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file_uploaded = form.save(commit=False)
+            # file = UploadFileForm()
+            form.save()
+            return redirect('Index')
+    elif request.method == 'GET':
+        form = UploadFileForm()
+    return render (request, 'visual/upload.html', {'form' : form})
 
+
+
+
+    # context = {}
+    # if request.method == 'POST':
+    #     uploaded_file = request.FILES['file']
+    #     fs = FileSystemStorage()
+    #     name = fs.save(uploaded_file.name, uploaded_file)
+    #     url = fs.url(name)
+    #     context['url'] = fs.url(name)
+    # return render (request, 'visual/upload.html', context)
