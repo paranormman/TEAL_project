@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from . models import Files
 
-class FilesSerializer(serializers.ModelSerializer):
+class FilesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta():
         model = Files
         fields = ('file', 'remark', 'timestamp',)

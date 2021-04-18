@@ -1,4 +1,4 @@
-from rest_framework.views import APIView
+from rest_framework import viewsets
 from rest_framework.parsers import FileUploadParser, FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,7 +10,7 @@ from . models import Files
 
 from .serializers import FilesSerializer
 
-class FileView(APIView):
+class FileViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
     def post(self, request, *args, **kwargs):
 
