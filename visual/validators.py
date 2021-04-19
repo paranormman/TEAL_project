@@ -5,26 +5,23 @@ import pandas as pd
 
 def validate_file(value):
 
-    name = os.path.splitext(value)
     ext = os.path.splitext(value.name)[1]
     valid_extentions = ['.csv']
     if ext.lower() in valid_extentions:
-        try:
-            df=pd.read_csv(name)
-            n = len(df.columns.tolist())
-            if n == 0:
-                raise ValidationError(u'No Column to parse ')
-            elif n == 1:
+        df=pd.read_csv(value)
+        n = len(df.columns.tolist())
+        if n == 0:
+            raise ValidationError(u'No Column to parse ')
+        elif n == 1:
                 # take sf as input from user and other operations
-                raise ValidationError(u'No time value in the file ')
-            elif n == 2:
+            raise ValidationError(u'missing time value in the file ')
+        elif n == 2:
                 # calculate sf and other operations
-                raise ValidationError(u'Missing amplitude value in the file')
-            else:
-                raise ValidationError(u'XXXXXX ')
-   
-        except:
-            raise ValidationError(u'Unsupported file extention. please upload a .csv file. ')
+            raise ValidationError(u'Missing amplitude value in the file')
+        else:
+            return value
+    else:
+        raise ValidationError(u'Unsupported file extention. please upload a .csv file. ')
 
 #old exception class 
     # ext = os.path.splitext(value.name)[1]

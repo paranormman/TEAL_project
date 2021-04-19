@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 
 <h1>UPLOAD</h1>
-<form method="POST" action="/visual/index/" enctype="multipart/form-data">
+<form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %} {{form.as_p}}
     <!-- <input type="file" class="mb-xs mt-xs mr-xs btn btn-lg btn-primary" name=" file "> -->
     <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> Upload file </button>

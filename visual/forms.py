@@ -20,15 +20,16 @@ class UploadFileForm(forms.ModelForm):
         if upload:
             filename = upload.name
             if filename.endswith(settings.FILE_UPLOAD_TYPE):
-                csv = pd.read_csv(upload.name)
-                
-
-                if csv.isnull().any()['time']:
-                    raise forms.ValidationError(u'Missing time value data')
-
-                elif csv.isnull().any()['amplitude']:
-                    raise forms.ValidationError(u'Missing amplitude value data')
-                
+                df=pd.read_csv(upload)
+                n = len(df.columns.tolist())
+                if n == 0:
+                    raise forms.ValidationError(u'No Column to parse ')
+                elif n == 1:
+                    # take sf as input from user and other operations
+                    raise forms.ValidationError(u'No time value in the file ')
+                elif n == 2:
+                    # calculate sf and other operations
+                    raise forms.ValidationError(u'Missing amplitude value in the file')
                 else:
                     return upload
 
