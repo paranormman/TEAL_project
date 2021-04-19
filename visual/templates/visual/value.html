@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Sampling Frequency</h1>
+
+<form method="POST" action="/visual/value/" enctype="multipart/form-data">
+    {% csrf_token %} {{form.as_p}}
+    <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> Sampling Frequency </button>
+</form>
+
+<!-- <h>If the entered csv does not have Time value click here to enter sampling frequency</h>
+<form method="POST" action="visual/value/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> Sampling Frequency </button>
+</form> -->
+{% endblock %}

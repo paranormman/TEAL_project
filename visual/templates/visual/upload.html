@@ -4,12 +4,18 @@
 <form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %} {{form.as_p}}
     <!-- <input type="file" class="mb-xs mt-xs mr-xs btn btn-lg btn-primary" name=" file "> -->
-    <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> Upload file </button>
+    <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> Validate file </button>
 </form>
 <!-- <form method="POST" action="/visual/index/" enctype="multipart/form-data">
     {% csrf_token %}
     <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> calculate </button>
 </form> -->
+
+<h>If the entered csv does not have Time value click here to enter sampling frequency</h>
+<form method="POST" action="/visual/value/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> Sampling Frequency </button>
+</form>
 
 {% if url %}
 <h4>Uploaded file: <a href="{{ url }}">{{ url }}</a></h4>

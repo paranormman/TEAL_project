@@ -14,7 +14,7 @@ import io
 import urllib, base64
 import matplotlib.pyplot as plt
 from .models import SourceFile
-from .forms import UploadFileForm
+from .forms import UploadFileForm, SampleForm
 from . validators import validate_file
 from django.contrib import messages
 from rest_framework.reverse import reverse
@@ -90,6 +90,18 @@ def upload(request):
     elif request.method == 'GET':
         form = UploadFileForm()
     return render (request, 'visual/upload.html', {'form' : form})
+
+
+def sample(request):
+    if request.method == 'POST':
+        form = SampleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("<h1>Data saved Successfully<h1>")
+        elif request.method == 'GET':
+            form = SampleForm()
+        return render (request, 'visual/value.html', {'form' : form})
+            
 
 
 

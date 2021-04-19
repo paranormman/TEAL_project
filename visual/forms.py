@@ -1,5 +1,5 @@
 from django import forms
-from .models import SourceFile
+from .models import SourceFile, SampleField
 from .validators import validate_file
 from . import views
 from rest_framework import settings
@@ -42,3 +42,11 @@ def clean(self):
     cleaned_data = super(UploadFileForm, self, clean)
     upload = cleaned_data.get('file')
     return upload
+
+
+
+class SampleForm(forms.ModelForm):
+
+    class Meta:
+        model = SampleField
+        fields = ('sampling_frequency',)

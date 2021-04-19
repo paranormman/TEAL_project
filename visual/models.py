@@ -8,3 +8,6 @@ class SourceFile(models.Model):
 
     def __str__(self):
         return self.name + ": " + str(self.filepath)
+
+class SampleField(models.Model):
+    sampling_frequency = models.IntegerField()
