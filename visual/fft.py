@@ -42,14 +42,16 @@ import csv
 import pandas as pd
 # import numpy as np
 
-file = ("E:\\Django_proj\\mysite\\media\\media\\Acc_time.csv")
+file = ("E:\\Django_proj\\restapi\\media\\Acc_time_ext.csv")
 # csv = pd.read_csv(file)
 csv = pd.read_csv(file, header=0, nrows=0).columns.tolist()
 first = csv.index('time')
 second = csv.index('amplitude')
-# if first != 0:
-#     print('yes')
-print(first)
+if first != 0:
+    print('yes')
+else:
+    print('no')
+# print(first)
 
 
 # time = len(csv[0])

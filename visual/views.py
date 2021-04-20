@@ -86,7 +86,7 @@ def upload(request):
             file_uploaded = form.save(commit=False)
             file = UploadFileForm()
             form.save()
-            return redirect("<h1>Your csv file was uploaded</h1>")
+            return redirect("Index")
     elif request.method == 'GET':
         form = UploadFileForm()
     return render (request, 'visual/upload.html', {'form' : form})
