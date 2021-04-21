@@ -94,8 +94,9 @@ def upload(request):
 
 def sample(request):
     if request.method == 'POST':
-        form = SampleForm(request.POST)
+        form = SampleForm(request.POST, request.FILES)
         if form.is_valid():
+            file_uploaded = form.save(commit=False)
             form.save()
             return redirect("<h1>Data saved Successfully<h1>")
         elif request.method == 'GET':

@@ -44,15 +44,30 @@ import pandas as pd
 
 file = ("E:\\Django_proj\\restapi\\media\\Acc_time_ext.csv")
 # csv = pd.read_csv(file)
-csv = pd.read_csv(file, header=0, nrows=0).columns.tolist()
-first = csv.index('time')
-second = csv.index('amplitude')
-if first != 0:
-    print('yes')
-else:
-    print('no')
-# print(first)
+# csv = pd.read_csv(file, header=0, nrows=0).columns.tolist()
+# first = csv.index('time')
+# second = csv.index('amplitude')
+# if csv != first:
+#     print('yes')
+# else:
+#     print('no')
+# print(csv)
+# print(second)
 
+file = ("E:\\Django_proj\\restapi\\media\\Acc_time_ext.csv")
+
+df=pd.read_csv(file)
+n = len(df.columns.tolist())
+print(n)
+if n == 1:
+    csv = pd.read_csv(file, header=0, nrows=0).columns.tolist()
+    print(csv)
+    if csv == 'time':
+        print ('time')
+    else:
+        print('ampli')
+else:
+    print ('error')
 
 # time = len(csv[0])
 # num = csv['time']. iloc[1]

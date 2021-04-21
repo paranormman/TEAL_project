@@ -25,6 +25,14 @@ class UploadFileForm(forms.ModelForm):
                 if n == 0:
                     raise forms.ValidationError(u'No Column to parse ')
                 elif n == 1:
+                    try:
+                        df=pd.read_csv(upload, header=0, nrows=0).columns.tolist()
+                        if df == 'time':
+                            raise forms.ValidationError(u'missing Time value in the file')
+                        else:
+                            raise forms.ValidationError(u'missing amplitude value in the file')
+                    except Exception as e:
+                        raise forms.ValidationError("Unable to upload CVS file. "+repr(e))
                     # take sf as input from user and other operations
                     raise forms.ValidationError(u'No time value in the file ')
                 elif n == 2:
@@ -49,4 +57,4 @@ class SampleForm(forms.ModelForm):
 
     class Meta:
         model = SampleField
-        fields = ('sampling_frequency',)
+        fields = ('timefile','sampling_frequency',)
