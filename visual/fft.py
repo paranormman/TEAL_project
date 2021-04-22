@@ -57,17 +57,13 @@ file = ("E:\\Django_proj\\restapi\\media\\Acc_time_ext.csv")
 file = ("E:\\Django_proj\\restapi\\media\\Acc_time_ext.csv")
 
 df=pd.read_csv(file)
-n = len(df.columns.tolist())
+col = df.columns.tolist()
+n = len(col)
 print(n)
-if n == 1:
-    csv = pd.read_csv(file, header=0, nrows=0).columns.tolist()
-    print(csv)
-    if csv == 'time':
-        print ('time')
-    else:
-        print('ampli')
+if col[0] != 'time' or col[1] != 'amplitude':
+    print('column')
 else:
-    print ('error')
+    print('column')
 
 # time = len(csv[0])
 # num = csv['time']. iloc[1]

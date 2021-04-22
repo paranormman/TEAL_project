@@ -53,8 +53,10 @@ def clean(self):
 
 
 
-class SampleForm(forms.ModelForm):
+class SampleForm(forms.Form):
+    timefile = forms.FileField(widget=forms.FileInput)
+    sampling_frequency = forms.IntegerField(widget=forms.NumberInput)
 
     class Meta:
         model = SampleField
-        fields = ('timefile','sampling_frequency',)
+        fields = ('timefile',)

@@ -11,4 +11,4 @@ class SourceFile(models.Model):
 
 class SampleField(models.Model):
     timefile = models.FileField(upload_to="media/")
-    sampling_frequency = models.IntegerField()
+    sampling_frequency = models.IntegerField(default=0, null=False)
