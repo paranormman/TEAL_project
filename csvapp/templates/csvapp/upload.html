@@ -1,0 +1,183 @@
+{% extends 'base.html' %} {% block content %}
+
+{% comment %} <h1>UPLOAD</h1>
+<form method="POST" action="/visual/index/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" class="mb-xs mt-xs mr-xs btn btn-lg btn-primary" name=" file ">
+    <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> Upload file </button>
+</form>
+<!-- <form method="POST" action="/visual/index/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="submit " class="mb-xs mt-xs mr-xs btn btn-primary "><i class="fa fa-cloud "></i> calculate </button>
+</form> -->
+
+{% if url %}
+<h4>Uploaded file: <a href="{{ url }}">{{ url }}</a></h4>
+{% endif %} {% endblock %} {% endcomment %}
+
+
+
+
+
+{% csrf_token %}
+<div class="form-group">
+    <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">Select : </label>
+    <div class="col-md-8">
+        
+<select name="cars" id="cars">
+ <option value="">Select</option>
+  <option value="WithTime">AmpandFreq</option>
+  <option value="WithoutTime">Amplitude</option>
+  
+</select>
+           </div>                    
+</div>
+
+
+<div id="withtime" style="display:none">{{fftdata}}
+<form name="form1" action="/csvapp/upload_csv/"  method="POST" enctype="multipart/form-data" class="form-horizontal"> 
+{% csrf_token %}
+<div class="form-group">
+    <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+    <div class="col-md-8">
+        <input type="file" name="file1" id="csv_file" required="True" class="form-control">
+    </div>                    
+</div>
+<div class="form-group">                    
+    <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+         <button class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+    </div> 
+</div>
+</form>
+</div>
+
+<div id="withouttime" style="display:none">
+<form name="form" action="/csvapp/upload_withouttime/" method="POST" enctype="multipart/form-data" class="form-horizontal"> 
+{% csrf_token %}
+<div class="form-group">
+    <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+    <div class="col-md-8">
+        <input type="file" name="file" id="filewt" required="True" class="form-control">
+    </div>                    
+</div>
+<div class="form-group">
+    <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">Sampling Frequency: </label>
+    <div class="col-md-8">
+        <input type="text" name="sampfreq" id="sampfreq" required="True" class="form-control">
+    </div>                    
+</div>
+<div class="form-group">                    
+    <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+         <button class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+    </div> 
+</div>
+</form>
+</div>
+
+<canvas id="chart" height="90"></canvas>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            {%if '{{message}}' == ""
+            alert('{{message}}')
+        {% endfor %}
+    {% endif %}
+$('select').on('change', function() {
+      
+       var a = $(this).val()
+       var b="WithTime"
+       
+        if (a==b) {
+            
+            $('#withtime').show();
+            $('#withouttime').hide();
+       }
+       else
+       {
+            $('#withtime').hide();
+            $('#withouttime').show();
+
+         
+       }
+})
+function sendfile()
+{
+    api_url = "http://127.0.0.1:8000/csvrestapi/"
+    alert("1");
+    var data_file = $("#filewt").val();
+    var data = {
+        'data': $("#filewt").val()
+    }
+    alert(data_file)
+    $.ajax({
+        url: api_url+'test/',
+        type: 'POST',
+        data: data,
+        contentType: false,
+        processData: false,
+        success: function (data, status, xhr) {
+            //handle success    
+            alert("success")
+                    },
+        error: function (data, status, xhr) {
+            //handle error
+            alert(data)
+        }
+
+    });
+}
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+  const mydata = {{ fftdata|safe }};
+  var obj = JSON.parse(JSON.stringify(mydata));
+ 
+ 
+  for(var k in obj) {
+        if(obj[k] instanceof Object) {
+            alert(obj[k])
+           
+        } else {
+            document.write(obj[k] + "<br>");
+        };
+    }
+
+    {% comment %} var myChart = new Chart('chart', {
+  type: 'bar',
+  data: {
+    labels: label,
+    datasets: [{
+      label: coworker[0],
+      data: data[0],
+      backgroundColor: 'red'
+    },
+    {
+      label: coworker[1],
+      data: data[2],
+      backgroundColor: 'blue'
+    },
+    {
+      label: coworker[2],
+      data: data[2],
+      backgroundColor: 'green'
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+        }
+      }],
+    }
+  }
+});
+</script>
+ {% endcomment %}
+
+{% endblock %}
+
