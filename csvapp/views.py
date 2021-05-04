@@ -40,7 +40,7 @@ def upload_csv(request):
 		if csv_file.name.endswith(".csv") != True:
 			messages.error(request,'File is not CSV type')
 			
-			return render(request, "csvapp/upload.html", data)
+			# return render(request, "csvapp/upload.html", data)
        
 
 		csv=pd.read_csv(csv_file,error_bad_lines=False)
