@@ -5,7 +5,7 @@ from . import views
 from rest_framework import settings
 import pandas as pd
 
-class UploadFileForm(forms.ModelForm):
+class UploadFileForm(forms.ModelForm): 
 
 
     class Meta:

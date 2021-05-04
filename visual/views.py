@@ -32,7 +32,7 @@ class Home(TemplateView):
 
 def index(request):
     if request.method =="POST":
-        sampfreq1 = request.POST.get("sampling_frequency")
+        # sampfreq1 = request.POST.get("sampling_frequency")
         csv_file = request.FILES['file']
         csv = pd.read_csv(csv_file)
         samplingFrequency = sampfreq1;

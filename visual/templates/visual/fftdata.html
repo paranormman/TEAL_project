@@ -1,0 +1,101 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+
+<h2>FFT graph</h2>
+{% csrf_token %}
+
+
+<canvas id="chart" height="90"></canvas>
+<div class="col-md-3 pull-left" style="margin-bottom:10px;padding-top:50px;">
+    <button class="btn btn-primary" onclick="location.href = '/csvapp/upload'"> <span class="glyphicon glyphicon-circle-arrow-left" style="margin-right:5px;"></span>Go Back </button>
+</div>
+<div class="col-md-3 pull-right" style="margin-bottom:10px;padding-top:50px;padding-left:0px;">
+    <button class="btn btn-primary" onclick="location.href = '/csvapp/upload'"> <span class="glyphicon glyphicon-download" style="margin-right:5px;"></span>Download </button>
+</div>
+<script src="{% static '/assets/javascripts/chart.min.js' %}" type="text/javascript"></script>
+
+
+<script>
+    const mydata = ({
+        fftdata,
+        safe
+    });
+    var obj = JSON.parse(JSON.stringify(mydata))
+    var Frequencies = {};
+    var Amplitude = {};
+    var datalist = [];
+    var i = 0;
+    for (var k in obj) {
+        if (obj[k] instanceof Object) {
+            datalist[i] = obj[k]
+
+            //alert(obj[k]);
+            //alert(datalist[i]);
+            i++;
+        } else {
+            document.write(obj[k] + "<br>");
+        };
+    }
+
+    var ctx = document.getElementById('chart').getContext('2d');
+    const labels = datalist[0]
+    const data = {
+        labels: labels,
+        datasets: [{
+            axis: 'y',
+            label: 'My First Dataset',
+
+            data: datalist[1],
+            fill: true,
+            fillColor: '	rgb(255,20,147)',
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+        }]
+    }
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            labels: {
+                fontColor: "blue",
+                fontSize: 18
+            },
+            indexAxis: 'y',
+            scales: {
+                x: {
+                    beginAtZero: true,
+
+                },
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Amplitude',
+                        color: '#C71585'
+                    },
+                    ticks: {
+                        fontColor: "#000000", // this here
+                    },
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Frequency",
+                        color: 'black'
+                    },
+                    ticks: {
+                        fontColor: "#000000", // this here
+                    },
+                }, ]
+            }
+        }
+    };
+
+    myPie = new Chart(ctx, config);
+</script>
+{% endblock%}
