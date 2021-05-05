@@ -69,16 +69,9 @@ def upload_csv(request):
 		fftdata1=url_response.json()
 		print(fftdata1)
 
-		#messages.error(request,"uploaded")
 		return render(request, "csvapp/fftdata.html", {"fftdata":fftdata1})			
-		# except Exception as e:
-		# 	logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-		# 	messages.error(request,"Unable to upload file. "+repr(e))
 
 
-		
-		#return HttpResponseRedirect(reverse("csvapp:upload")) 
-		#return render(request, "csvapp/upload.html", data)
 
 
 def upload_withouttime(request):
